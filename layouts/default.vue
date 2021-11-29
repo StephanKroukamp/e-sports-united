@@ -27,6 +27,8 @@
       app
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+
+      <v-toolbar-title>{{title}}</v-toolbar-title>
     </v-app-bar>
     <v-main>
       <v-container>
@@ -52,9 +54,14 @@ export default
       items: 
       [
         {
-          icon: 'mdi-apps',
-          title: 'Welcome',
-          to: '/'
+          icon: 'mdi-account-group',
+          title: 'Organizations',
+          to: '/Organizations'
+        },
+        {
+          icon: 'mdi-controller-classic-outline',
+          title: 'Sports',
+          to: '/Sports'
         }
       ]
     }

@@ -5,8 +5,8 @@ export default
   ssr: false,
   head:
   {
-    titleTemplate: '%s - e-sports-united',
-    title: 'e-sports-united',
+    titleTemplate: 'Esports United',
+    title: 'Esports United',
     meta: [
       { 
         charset: 'utf-8'
