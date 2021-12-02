@@ -62,6 +62,21 @@ export default
           icon: 'mdi-controller-classic-outline',
           title: 'Sports',
           to: '/Sports'
+        },
+        {
+          icon: 'mdi-account',
+          title: 'Players',
+          to: '/Players'
+        },
+        {
+          icon: 'mdi-trophy',
+          title: 'Leagues',
+          to: '/Leagues'
+        },
+        {
+          icon: 'mdi-calendar-clock',
+          title: 'Events',
+          to: '/Events'
         }
       ]
     }

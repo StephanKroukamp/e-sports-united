@@ -1,32 +1,30 @@
 <template>
   <div class="page-root">
-    {{sports}}
+    {{events}}
   </div>
 </template>
 
 <script>
   export default {
     data: () => ({
-      sports: []
+      events: []
     }),
     fetch() {
       this.$fire.firestore
-      .collection("sports")
+      .collection("events")
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
-            const sport = doc.data();
+            const event = doc.data();
 
             const id = doc.id;
 
             const data = {
               id,
-              events: sport.events,
-              leagues: sport.leagues,
-              organizations: sport.organizations
+              sport: event.sport
             };
             
-            this.sports.push(data);
+            this.events.push(data);
         });
       });
     }

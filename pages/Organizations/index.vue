@@ -1,34 +1,32 @@
 <template>
   <div class="page-root">
-    <p v-if="loading">Loading...</p>
-
-    <div v-else>
-      <ul>
-        <li v-for="organization in organizations" :key="organization.id">
-          {{ organization.name }}
-        </li>
-      </ul>
-    </div>
+    {{organizations}}
   </div>
 </template>
 
 <script>
-  import { mapGetters, mapActions } from 'vuex';
-
   export default {
     data: () => ({
-      loading: false
+      organizations: []
     }),
-    methods: {
-      ...mapActions({
-        fetchOrganizations: 'organization/fetchOrganizations'
-      })
-    },
-    computed: {
-      ...mapGetters({ organizations: 'organization/getOrganizations' })
-    },
-    mounted() {
-      this.fetchOrganizations();
+    fetch() {
+      this.$fire.firestore
+      .collection("organizations")
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+            const organization = doc.data();
+
+            const id = doc.id;
+
+            const data = {
+              id,
+              players: organization.players
+            };
+            
+            this.organizations.push(data);
+        });
+      });
     }
   }
 </script>
