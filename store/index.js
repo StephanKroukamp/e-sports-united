@@ -1,15 +1,11 @@
-export const state = () => (
-{
-});
-  
-export const mutations = 
-{
-}
+export default {
+    onAuthStateChanged({ commit }, authUser ) {
+      if (!authUser) {
+        commit('RESET_STORE');
 
-export const actions =
-{
-}
+        return;
+      }
 
-export const getters =
-{
-}
+      commit('SET_AUTH_USER', authUser);
+    }
+  }

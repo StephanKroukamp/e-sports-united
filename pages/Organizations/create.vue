@@ -1,13 +1,12 @@
 <template>
   <div class="page-root">
-    <h1>{{message}}</h1>
+    This is admin page! welcome!
   </div>
 </template>
 
 <script>
   export default {
-    data: () => ({
-      message: "Greetings sheople"
-    })
+    middleware: 'auth',
+    data: () => ({})
   }
 </script>
