@@ -1,97 +1,66 @@
 <template>
   <div class="page-root">
-    <div>
-      <form>
-        <v-text-field
-          v-model="email"
-          :error-messages="emailErrors"
-          label="E-mail"
-          required
-          @input="$v.email.$touch()"
-          @blur="$v.email.$touch()"
-        ></v-text-field>
-        <v-text-field
-          v-model="password"
-          :error-messages="passwordErrors"
-          label="Password"
-          required
-          type="password"
-          @input="$v.password.$touch()"
-          @blur="$v.password.$touch()"
-        ></v-text-field>
-        <v-btn
-          class="mr-4"
-          @click="submit"
-        >
-          submit
-        </v-btn>
-        <v-btn @click="clear">
-          clear
-        </v-btn>
-      </form>
-    </div>
+    <v-form
+      ref="form"
+      v-model="valid"
+      lazy-validation
+    >
+      <v-text-field
+        v-model="email"
+        :rules="emailRules"
+        label="E-mail"
+        required
+      ></v-text-field>
+
+      <v-text-field
+        v-model="password"
+        :counter="10"
+        :rules="passwordRules"
+        label="Password"
+        required
+      ></v-text-field>
+      
+      <v-btn
+        :disabled="!valid"
+        color="success"
+        class="mr-4"
+        @click="submit"
+      >
+        Submit
+      </v-btn>
+    </v-form>
   </div>
 </template>
 
 <script>
-  import { validationMixin } from 'vuelidate';
-  import { required, email } from 'vuelidate/lib/validators';
-
+  
   export default {
     middleware: 'noauth',
-
-    mixins: [validationMixin],
-
-    validations: {
-      email: { required, email },
-      password: { required }
-    },
-
     data: () => ({
+      valid: true,
       email: 'admin@esportsunited.com',
-      password: 'xTest1234$'
+      emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /.+@.+\..+/.test(v) || 'E-mail must be valid'
+      ],
+      password: 'xTest1234$',
+      passwordRules: [
+        v => !!v || 'Password is required',
+        v => (v && v.length > 5) || 'Password must be more than 6 characters'
+      ]
     }),
     
-    computed: {
-      emailErrors () {
-        const errors = []
-        if (!this.$v.email.$dirty) return errors
-        !this.$v.email.email && errors.push('Must be valid e-mail')
-        !this.$v.email.required && errors.push('E-mail is required')
-        return errors
-      },
-      passwordErrors () {
-        const errors = []
-        if (!this.$v.password.$dirty) return errors
-        !this.$v.password.required && errors.push('Password is required.')
-        return errors
-      }
-    },
-
     methods: {
       submit () {
-        this.$v.$touch()
-
-        if (this.emailErrors.length > 0)
-        {
-        } else if (this.passwordErrors.length > 0)
-        {
-        } else {
-          this.$fire.auth
+        this.$fire.auth
           .signInWithEmailAndPassword(this.email, this.password)
           .then((userCredential) => {
-            console.log(1);
             this.$router.push('/organizations/create');
-            console.log(2);
+
+            this.$notifier.showMessage({ content: 'Signed in', color: 'success', 'timeout': 1000 })
           }).catch((error) => {
-            alert(error.message);
+            this.$notifier.showMessage({ content: error.message, color: 'error', 'timeout': 1000 })
           });
-        }
-      },
-      clear () {
-        this.$v.$reset()
-        this.email = '';
-        this.password = '';
       }
     }
   }

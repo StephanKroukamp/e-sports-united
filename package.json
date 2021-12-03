@@ -16,7 +16,6 @@
     "firebase": "^8.2.6",
     "firebase-admin": "^9.5.0",
     "nuxt": "^2.15.7",
-    "vuelidate": "^0.7.6",
     "vuetify": "^2.5.5"
   },
   "devDependencies": {

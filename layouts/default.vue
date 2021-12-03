@@ -83,6 +83,7 @@
     <v-main>
       <v-container>
         <Nuxt />
+        <Snackbar></Snackbar>
       </v-container>
     </v-main>
     <v-footer

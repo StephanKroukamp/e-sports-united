@@ -38,9 +38,9 @@ export default
       [
       ],
 
-    plugins:
-      [
-      ],
+    plugins: [
+      '~/plugins/notifier.js'
+    ],
 
     components: true,
 
@@ -118,6 +118,8 @@ export default
         }
       }
     },
+
+    components: true,
 
     build:
     {
