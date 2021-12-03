@@ -119,8 +119,6 @@ export default
       }
     },
 
-    components: true,
-
     build:
     {
     }
